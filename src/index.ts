@@ -1,6 +1,5 @@
 import { ExecutionContext, ScheduledEvent } from '@cloudflare/workers-types';
-import FormData from 'form-data';
-import fetch from 'node-fetch';
+import { AttachmentBuilder, BaseMessageOptions, WebhookClient } from 'discord.js';
 import { Env, TrafficInfo, TrafficInfoResponse } from './types.js';
 
 export default {
@@ -22,12 +21,15 @@ export default {
     }
 
     async function sendToDiscord(trafficInfo: TrafficInfo) {
-      const formData = new FormData();
+      const webhookClient = new WebhookClient({ url: env.DISCORD_WEBHOOK_URL });
+      let files: BaseMessageOptions['files'] = [];
 
       if (trafficInfo.snsImg) {
-        formData.append('file', Buffer.from(trafficInfo.snsImg, 'base64'), {
-          filename: trafficInfo.snsImgNm ?? `${trafficInfo.snsId}.png`,
+        const buffer = Buffer.from(trafficInfo.snsImg, 'base64');
+        const attachment = new AttachmentBuilder(buffer, {
+          name: trafficInfo.snsImgNm ?? `image.png`,
         });
+        files = [attachment];
       }
 
       const codeToEmoji = {
@@ -36,16 +38,10 @@ export default {
       };
       const content = `${codeToEmoji[trafficInfo.snsDataCd]} ${trafficInfo.snsMsg}`;
 
-      formData.append('payload_json', JSON.stringify({ content }));
-
-      const res = await fetch(env.DISCORD_WEBHOOK_URL, {
-        method: 'POST',
-        headers: formData.getHeaders(),
-        body: formData,
+      await webhookClient.send({
+        content,
+        files,
       });
-      if (!res.ok) {
-        throw new Error(`Failed to send to Discord: ${res.status}`);
-      }
     }
 
     async function insertHistory(date: string) {
