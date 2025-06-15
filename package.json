@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Sends Seoul Traffic Info (TOPIS) to Discord with Cloudflare Workers Cron",
-  "main": "api/cron.ts",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc"
   },
