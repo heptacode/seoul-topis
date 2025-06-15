@@ -32,7 +32,7 @@ export default {
         //   name: info.snsImgNm ?? `image.png`,
         // });
 
-        formData.append('files', [buffer], {
+        formData.append('files', buffer, {
           filename: info.snsImgNm ?? `${info.snsId}.png`,
         });
         // files = [attachment];
