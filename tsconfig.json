@@ -8,7 +8,8 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["api", "lib", "src/types.ts"]
+  "include": ["src"]
 }

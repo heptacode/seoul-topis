@@ -20,23 +20,23 @@ export default {
       return newItems;
     }
 
-    async function sendToDiscord(trafficInfo: TrafficInfo) {
+    async function sendToDiscord(info: TrafficInfo) {
       const webhookClient = new WebhookClient({ url: env.DISCORD_WEBHOOK_URL });
       let files: BaseMessageOptions['files'] = [];
 
-      if (trafficInfo.snsImg) {
-        const buffer = Buffer.from(trafficInfo.snsImg, 'base64');
+      if (info.snsImg) {
+        const buffer = Buffer.from(info.snsImg, 'base64');
         const attachment = new AttachmentBuilder(buffer, {
-          name: trafficInfo.snsImgNm ?? `image.png`,
+          name: info.snsImgNm ?? `image.png`,
         });
         files = [attachment];
       }
 
       const codeToEmoji = {
-        '01': '🚧',
+        '01': '⚠️',
         '02': '📢',
       };
-      const content = `${codeToEmoji[trafficInfo.snsDataCd]} ${trafficInfo.snsMsg}`;
+      const content = `${codeToEmoji[info.snsDataCd]} ${info.snsMsg}`;
 
       await webhookClient.send({
         content,
@@ -50,9 +50,9 @@ export default {
       await env.KV.put('history', JSON.stringify([date].concat(history)));
     }
 
-    const list = await fetchLatestTrafficInfoList();
+    const infoList = await fetchLatestTrafficInfoList();
 
-    for (const info of list) {
+    for (const info of infoList) {
       console.log(info.snsMsg);
 
       await sendToDiscord(info);
