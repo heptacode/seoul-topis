@@ -14,5 +14,9 @@
     "@types/node": "^24.0.1",
     "typescript": "^5.8.3",
     "wrangler": "^4.20.0"
+  },
+  "dependencies": {
+    "form-data": "^4.0.3",
+    "node-fetch": "^3.3.2"
   }
 }

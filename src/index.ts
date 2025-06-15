@@ -1,4 +1,6 @@
 import { ExecutionContext, ScheduledEvent } from '@cloudflare/workers-types';
+import FormData from 'form-data';
+import fetch from 'node-fetch';
 import { Env, TrafficInfo, TrafficInfoResponse } from './types.js';
 
 export default {
@@ -20,16 +22,26 @@ export default {
     }
 
     async function sendToDiscord(trafficInfo: TrafficInfo) {
+      const formData = new FormData();
+
+      if (trafficInfo.snsImg) {
+        formData.append('file', Buffer.from(trafficInfo.snsImg, 'base64'), {
+          filename: trafficInfo.snsImgNm ?? `${trafficInfo.snsId}.png`,
+        });
+      }
+
       const codeToEmoji = {
         '01': '🚧',
         '02': '📢',
       };
       const content = `${codeToEmoji[trafficInfo.snsDataCd]} ${trafficInfo.snsMsg}`;
 
+      formData.append('payload_json', JSON.stringify({ content }));
+
       const res = await fetch(env.DISCORD_WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content }),
+        headers: formData.getHeaders(),
+        body: formData,
       });
       if (!res.ok) {
         throw new Error(`Failed to send to Discord: ${res.status}`);
