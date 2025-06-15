@@ -4,7 +4,6 @@ import { Env, TrafficInfo, TrafficInfoResponse } from './types.js';
 
 export default {
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
-    new WebhookClient({ url: env.DISCORD_WEBHOOK_URL });
     async function fetchLatestTrafficInfoList(): Promise<TrafficInfo[]> {
       const res = await fetch(env.API_URL);
       if (!res.ok) throw new Error('Failed to fetch from API');
