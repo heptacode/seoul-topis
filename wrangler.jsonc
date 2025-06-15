@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "seoul-topis",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-02-04",
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "API_URL": "https://topis.seoul.go.kr/main/selectTwitterInfo.do"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "b3aebc2fa42b4e6e98a6250f1be9fdf7"
+    }
+  ]
+}

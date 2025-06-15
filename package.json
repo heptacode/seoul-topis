@@ -1,0 +1,18 @@
+{
+  "name": "seoul-topis",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Sends Seoul Traffic Info (TOPIS) to Discord with Cloudflare Workers Cron",
+  "main": "api/cron.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "heptacode <admin@hyunwoo.kim> (https://hyunwoo.kim)",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250614.0",
+    "@types/node": "^24.0.1",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.20.0"
+  }
+}
