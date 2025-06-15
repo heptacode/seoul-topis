@@ -16,6 +16,6 @@
     "wrangler": "^4.20.0"
   },
   "dependencies": {
-    "discord.js": "^14.19.3"
+    "form-data": "^4.0.3"
   }
 }
