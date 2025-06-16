@@ -18,9 +18,23 @@ export interface TrafficInfo {
   createDate: string; // "2025-06-15 13:37:20"
 }
 
+export interface TrafficInfoResponse {
+  rows: TrafficInfo[];
+}
+
+export interface MolitItsJSON {
+  header: MolitItsJSONHeader;
+  body: MolitItsJSONBody;
+}
+
 export interface MolitItsJSONHeader {
   resultCode: 0 | 1; // 응답 코드 (0: 성공 / 1: 실패)
   resultMsg: string | null;
+}
+
+export interface MolitItsJSONBody {
+  totalCount: number;
+  items: MolitItsEvent[];
 }
 
 export interface MolitItsEvent {
@@ -40,16 +54,9 @@ export interface MolitItsEvent {
   endDate: string; // 종료 일시(YYYYMMDDHH24MISS) or empty string
 }
 
-export interface MolitItsJSONBody {
-  totalCount: number;
-  items: MolitItsEvent[];
-}
-
-export interface MolitItsJSON {
-  header: MolitItsJSONHeader;
-  body: MolitItsJSONBody;
-}
-
-export interface TrafficInfoResponse {
-  rows: TrafficInfo[];
+export interface DiscordMessage {
+  attachment?: string;
+  attachmentName?: string;
+  attachmentType?: 'base64' | 'url';
+  content: string;
 }
