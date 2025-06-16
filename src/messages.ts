@@ -19,6 +19,6 @@ export const processTopisMessage = (info: TrafficInfo): DiscordMessage => {
 
 // TODO Link with NodeLink
 export const processMolitItsMessage = (info: MolitItsEvent): DiscordMessage => {
-  const content = `(${info.eventType}/${info.eventDetailType}) [${info.roadName}(${info.roadNo}))] [PLACEHOLDER FOR NODELINK] ${info.lanesBlocked}: ${info.message}`;
+  const content = `(${info.eventType}/${info.eventDetailType}) [${info.roadName}(${info.roadNo}))] [PLACEHOLDER FOR NODELINK] ${info.lanesBlocked}: ${info.message}\nDEBUG: eventType ${info.eventType} eventDetailType ${info.eventDetailType}`;
   return { content };
 };
