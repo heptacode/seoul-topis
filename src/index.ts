@@ -1,5 +1,9 @@
 import { ExecutionContext, ScheduledEvent } from '@cloudflare/workers-types';
-import { AttachmentBuilder, BaseMessageOptions, WebhookClient } from 'discord.js';
+import {
+  AttachmentBuilder,
+  BaseMessageOptions,
+  WebhookClient,
+} from 'discord.js';
 import { Env, TrafficInfo, TrafficInfoResponse } from './types.js';
 
 export default {
@@ -8,14 +12,19 @@ export default {
       const res = await fetch(env.API_URL);
       if (!res.ok) throw new Error('Failed to fetch from API');
 
-      const json: TrafficInfoResponse = (await res.json()) as TrafficInfoResponse;
+      const json: TrafficInfoResponse =
+        (await res.json()) as TrafficInfoResponse;
       const rows = json?.rows ?? [];
 
       if (!rows.length) return [];
 
-      const history: string[] = JSON.parse((await env.KV.get('history')) ?? '[]');
+      const history: string[] = JSON.parse(
+        (await env.KV.get('history')) ?? '[]'
+      );
 
-      const newItems = rows.reverse().filter(item => !history.includes(item.createDate));
+      const newItems = rows
+        .reverse()
+        .filter((item) => !history.includes(item.createDate));
 
       return newItems;
     }
@@ -44,10 +53,10 @@ export default {
       });
     }
 
-    async function insertHistory(date: string) {
-      const history: string[] = JSON.parse((await env.KV.get('history')) ?? '[]');
+    async function insertHistory(_key: string, date: string) {
+      const history: string[] = JSON.parse((await env.KV.get(_key)) ?? '[]');
 
-      await env.KV.put('history', JSON.stringify([date].concat(history)));
+      await env.KV.put(_key, JSON.stringify([date].concat(history)));
     }
 
     const infoList = await fetchLatestTrafficInfoList();
@@ -57,7 +66,7 @@ export default {
 
       await sendToDiscord(info);
 
-      await insertHistory(info.createDate);
+      await insertHistory('history', info.createDate);
     }
   },
 };

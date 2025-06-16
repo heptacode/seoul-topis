@@ -18,6 +18,38 @@ export interface TrafficInfo {
   createDate: string; // "2025-06-15 13:37:20"
 }
 
+export interface MolitItsJSONHeader {
+  resultCode: 0 | 1; // 응답 코드 (0: 성공 / 1: 실패)
+  resultMsg: string | null;
+}
+
+export interface MolitItsEvent {
+  type: string; // 도로 유형(고속도로 / 국도 / 지방도 / 시군도 / 기타)
+  eventType: string; // 이벤트유형(교통사고 / 공사 / 기상 / 재난 / 기타돌발 / 기타)
+  eventDetailType: string; // 이벤트세부유형
+  startDate: string; // 발생 일시(YYYYMMDDHH24MISS)
+  coordX: string; // 경도
+  coordY: string; // 위도
+  linkId: string; // 링크 ID ("3190009500")
+  roadName: string; // 도로명 ("서해안선")
+  roadNo: string; // 도로번호 ("15")
+  roadDrcType: string; // 도로 방향 유형 ("종점")
+  lanesBlockType: string; // 차단 통제 유형 ("") or empty string
+  lanesBlocked: string; // 차단 차로 ("2차로 차단") or empty string
+  message: string; // 돌발 내용 ("(2차로)이동노면보수작업중")
+  endDate: string; // 종료 일시(YYYYMMDDHH24MISS) or empty string
+}
+
+export interface MolitItsJSONBody {
+  totalCount: number;
+  items: MolitItsEvent[];
+}
+
+export interface MolitItsJSON {
+  header: MolitItsJSONHeader;
+  body: MolitItsJSONBody;
+}
+
 export interface TrafficInfoResponse {
   rows: TrafficInfo[];
 }
