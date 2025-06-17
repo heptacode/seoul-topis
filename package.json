@@ -10,6 +10,7 @@
   "author": "heptacode <admin@hyunwoo.kim> (https://hyunwoo.kim)",
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@cloudflare/workers-types": "^4.20250614.0",
     "@types/node": "^24.0.1",
     "typescript": "^5.8.3",
