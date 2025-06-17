@@ -10,14 +10,13 @@
   "author": "heptacode <admin@hyunwoo.kim> (https://hyunwoo.kim)",
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@cloudflare/workers-types": "^4.20250614.0",
     "@types/node": "^24.0.1",
     "typescript": "^5.8.3",
     "wrangler": "^4.20.0"
   },
   "dependencies": {
-    "discord.js": "^14.19.3",
-    "eslint-config-prettier": "^10.1.5",
-    "prettier": "^3.5.3"
+    "discord.js": "^14.19.3"
   }
 }
